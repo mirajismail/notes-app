@@ -1,21 +1,60 @@
-/*const fs = require('fs')
+const chalk = require('chalk')
+const { argv } = require('yargs')
+const yargs = require('yargs')
+const getNotes = require('./notes.js')
 
-//fs.writeFileSync('notes.txt', 'My name is Miraj.')
+//customize yargs version
+yargs.version('1.1.0')
 
-fs.appendFileSync('notes.txt', ' I am 17 years old.')
-*/
+//create add command
+yargs.command({
+    command: 'add',
+    describe: 'Add a new note',
+    builder: {
+        title:{
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string'
+        },
+        body:{
+            describe: 'Note body',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function(){
+        console.log('Title: ' + argv.title)
+        console.log('Body: ' + argv.body)
+    }
+})
 
 
-// const add = require('./utils.js')
+//create a remove command
+yargs.command({
+    command: 'remove',
+    describe: 'Remove a note',
+    handler:function(argv){
+        console.log('Removing a new note!', argv)
+    }
+})
 
-// const sum = add(4, -2)
+yargs.command({
+    command: 'list',
+    describe: 'Listing notes',
+    handler:function(){
+        console.log('Listing out all the notes!')
+    }
+})
 
-// console.log(sum)
+yargs.command({
+    command:'read',
+    describe:'Reads note',
+    handler:function(){
+        console.log('Reads a note!')
+    }
+})
 
-const greenMsg = require('chalk')
+//add, remove, read, list
 
-const notes = require('./notes.js')
+yargs.parse()
 
-console.log(notes())
-
-console.log(greenMsg.red.bgBlue.inverse.bold('error!'))
